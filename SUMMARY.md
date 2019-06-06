@@ -5,5 +5,5 @@
     * [第1节](Chapter1/yi.md)
     * [第2节](Chapter1/shi.md)
     * [第3节](Chapter1/zhu.md)
-* [gitbook教程](_gitbook/README.md)
+* [gitbook教程](My/README.md)
 
