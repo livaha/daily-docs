@@ -1,0 +1,3 @@
+# 忽略掉 GitBook 打包的 _book 文件
+_book
+node_modules
