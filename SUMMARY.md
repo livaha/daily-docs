@@ -1,9 +1,9 @@
 # Summary
 
 * [前言](README.md)
-* [第一章](Chapter1/readme.md)
-    * [第1节](Chapter1/yi.md)
-    * [第2节](Chapter1/shi.md)
-    * [第3节](Chapter1/zhu.md)
-* [gitbook教程](My/README.md)
+* [gitbook教程](gitbook_dev/README.md)
+* [微信小程序](wechat/README.md)
+    * [微信基础入门](wechat/base.md)
+    * [微信云函数基础](wechat/cloud.md)
+    * [微信小程序电影列表demo](wechat/movie.md)
 
