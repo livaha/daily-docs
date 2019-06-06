@@ -4,7 +4,7 @@
   "description": "sbwxffnhc的前端文档库",
   "language": "zh-hans",
   "styles": {
-    "website": "./public-repertory/css/gitbook-configure.css"
+    "website": "./public/css/gitbook.css"
   },
   "plugins": [
     "theme-comscore",
@@ -54,8 +54,8 @@
       "button": "打赏",
       "alipayText": "支付宝打赏",
       "wechatText": "微信打赏",
-      "alipay": "https://github.com/sbwxffnhc/daily-docs/blob/master/images/zfb.jpg?raw=true",
-      "wechat": "https://github.com/sbwxffnhc/daily-docs/blob/master/images/wx.jpg?raw=true"
+      "alipay": "https://github.com/sbwxffnhc/daily-docs/blob/master/public/images/zfb.jpg?raw=true",
+      "wechat": "https://github.com/sbwxffnhc/daily-docs/blob/master/public/images/wx.jpg?raw=true"
     },
     "tbfed-pagefooter": {
       "copyright":"Copyright &copy sbwxffnhc.github.io 2019",
