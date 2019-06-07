@@ -96,7 +96,46 @@
  
 
 #### 开始一个demo
+```javascript
+// pages/cloud/cloud.js
+const db = wx.cloud.database() //初始化数据库
+Page({
+  /**
+   * 页面的初始数据
+   */
+  data: {
 
+  },
+
+  insert: function () {
+    db.collection('user').add({
+      data:{
+        name:"nick",
+        description:"learn cloud database",
+        due:new Date('2019-09-09'),
+        tags:[
+          "cloud",
+          "database"
+        ]
+      }
+    }).then(res=>{
+      console.log(res)
+    }).catch(res=>{
+      console.error(res)
+    })
+
+  },
+  update: function () {
+    db.collection('user').doc('cbdb4c165cfa89bd016c1213527d8cbe').update({
+      data:{
+        name:'sbwxffnhc'
+      }
+    }).then(res=>{
+      console.log(res)
+    })
+  }
+})
+```
 
 
 
