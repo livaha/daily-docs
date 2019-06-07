@@ -100,7 +100,7 @@ JSON 是一种数据格式，并不是编程语言，在小程序中，JSON扮�
 <view wx:if="{{isLogin}}">jerry</view>
 <view wx:else>请登陆</view>
 
-<view hidden='{{!isLogin}}'>hidden</view>
+<view hidden="{{！isLogin}}">hidden</view> 
 ```
 
 ```
