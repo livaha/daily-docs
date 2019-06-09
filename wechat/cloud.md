@@ -95,7 +95,19 @@
 
  
 
-#### 开始一个demo
+#### 数据库demo
+
+wxml
+
+```
+<button bindtap="insert">insert</button>
+<button bindtap="update">update</button>
+<button bindtap="search">search</button>
+<button bindtap="delete">delete</button>
+```
+
+wxjs
+
 ```javascript
 // pages/cloud/cloud.js
 const db = wx.cloud.database() //初始化数据库
@@ -134,15 +146,186 @@ Page({
       console.log(res)
     })
   }
+  search: function () {
+    db.collection('user').where({
+      name:'sbwxffnhc'
+    }).get().then(res=>{
+      console.log(res)
+    }).catch(res=>{
+      console.log(res)
+    })
+    
+  },
+  delete: function () {
+    db.collection('user').doc('cbdb4c165cfa89bd016c1213527d8cbe').remove()
+    .then(res => {
+      console.log(res)
+      }).catch(res => {
+        console.log(res)
+      })
+
+  }
 })
 ```
 
 
 
+查找：
+
+通过自己手动创建的记录，查询不一定能找到，要通过创建权限去获得
+
+![](https://user-gold-cdn.xitu.io/2019/6/8/16b36429cf696eb9?w=690&h=360&f=png&s=33704)
 
 
 
+#### 云函数demo
+
+要安装nodejs
+
+求和函数sum()
+
+获取当前用户的openid
+
+批量删除云函数库的数据
 
 
 
+##### 开始第一个云函数 [文档](<https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/functions/getting-started.html> )
+
+1 项目根目录找到 `project.config.json` 文件 
+
+指定本地已存在的目录作为云函数的本地根目录
+
+示例：
+
+```javascript
+{
+	"cloudfunctionRoot": "cloudfunctions/"
+}
+```
+
+2 在云函数根目录上右键，在右键菜单中，可以选择创建一个新的 Node.js 云函数，我们将该云函数命名为 add。 
+
+修改云函数代码并返回给调用端
+
+```javascript
+exports.main = async (event, context) => {
+  return {
+    sum: event.a + event.b
+  }
+}
+```
+
+修改完后在云函数目录上右键，在右键菜单中，我们可以将云函数整体打包上传并部署到线上环境中。 
+
+部署完成后，我们可以在小程序中调用该云函数： 
+
+```javascript
+wx.cloud.callFunction({
+  // 云函数名称
+  name: 'add',
+  // 传给云函数的参数
+  data: {
+    a: 1,
+    b: 2,
+  },
+})
+.then(res => {
+  console.log(res.result) // 3
+})
+.catch(console.error)
+```
+
+那么到这里，我们就成功创建了我们的第一个云函数，并在小程序中成功调用！
+
+
+
+##### 获取小程序用户信息
+
+云开发的云函数的独特优势在于与微信登录鉴权的无缝整合。当小程序端调用云函数时，云函数的传入参数中会被注入小程序端用户的 openid，开发者无需校验 openid 的正确性，因为微信已经完成了这部分鉴权，开发者可以直接使用该 openid。与 openid 一起同时注入云函数的还有小程序的 appid。 
+
+去函数默认的函数模板：
+
+```javascript
+// 云函数入口文件
+const cloud = require('wx-server-sdk')
+
+cloud.init()
+
+// 云函数入口函数
+exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
+
+  return {
+    event,
+    openid: wxContext.OPENID,
+    appid: wxContext.APPID,
+    unionid: wxContext.UNIONID,
+  }
+}
+```
+
+在小程序端调用：
+
+```javascript
+
+  getopenid: function () {
+    wx.cloud.callFunction({
+      name: 'openid',
+    })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(console.error)
+  },
+```
+
+
+
+![](https://user-gold-cdn.xitu.io/2019/6/9/16b3bf2fe1f4f916?w=739&h=381&f=png&s=126041)
+
+![](https://user-gold-cdn.xitu.io/2019/6/9/16b3bf362753c93b?w=682&h=364&f=png&s=96850)
+
+
+
+##### 通过云函数批量删除数据
+
+云函数delete
+
+```javascript
+// 云函数入口文件
+const cloud = require('wx-server-sdk')
+
+cloud.init()
+
+const db=cloud.database();
+// 云函数入口函数
+exports.main = async (event, context) => {
+  try{
+    return await db.collection('user').where({
+      name: 'nick'
+    }).remove();
+  }
+  catch(e){
+    console.error(e)
+  }
+}
+```
+
+
+
+小程序端调用
+
+```javascript
+
+  delete: function () {
+    wx.cloud.callFunction({
+      name: 'delete'
+    })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(console.error)
+  },
+```
 
